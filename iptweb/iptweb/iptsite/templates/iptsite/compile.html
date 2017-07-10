@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block activetab %}
+	    	<li class="active"><a data-toggle="tab" href="compile">Compile</a></li>
+		    <li><a data-toggle="tab" href="run">Run</a></li>
+		    <li><a data-toggle="tab" href="history">Job History</a></li>
+		    <li><a data-toggle="tab" href="help">Help</a></li>
+{% endblock %}
+
+{% block body %}
+	<!-- Compile Tab -->
+{% block header %}
+	<h1>Launching a Compile Job</h1>
+{% endblock %}
+{% block headersum %}
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+{% endblock %}
+	<div id="compile" class="tab-pane fade in active">
+		<div class="container">
+			<form action="#">
+{% block form-group %}
+				<div class="form-group">
+					    <label for="ccommand">Command:</label>
+					    <input type="text" class="form-control" id="ccommand" placeholder="Enter command" name="ccommand">
+					    <table class="table table-condensed">
+					    	<tr>
+					    		<thead>
+					    			<th>If using:</th>
+					    			<th>Enter one of the following commands:</th>
+					    		</thead>
+					    	</tr>
+						    	<tbody>
+							    	<tr>
+							    		<td>serial, C</td>
+							    		<td>icc</td>
+							    	</tr>
+							    	<tr>
+							    		<td>serial C++</td>
+							    		<td>icpc</td>
+							    	</tr>	
+							    	<tr>
+							    		<td>MPI, C</td>
+							    		<td>mpicc</td>
+							    	</tr>
+							    	<tr>
+							    		<td>MPI, C++</td>
+							    		<td>mpicxx</td>
+							    	</tr>
+							    	<tr>
+							    		<td>Open MP, C</td>
+							    		<td>icc -qopenmp</td>
+							    	</tr>
+							    	<tr>
+							    		<td>Open MP, C++</td>
+							    		<td>icpc -qopenmp</td>
+							    	</tr>
+							    	<tr>
+							    		<td>CUDA</td>
+							    		<td>nvcc</td>
+							    	</tr>
+							    </tbody>
+					    </table>
+			    	</div>
+			    	<div class="form-group">
+					    <label for="driver">Driver:</label>
+					    <input type="text" class="form-control" id="driver" placeholder="Enter driver" name="driver">
+			    	</div>
+			    	<div class="form-group">
+					    <label for="outfiles">Output File(s):</label>
+					    <input type="text" class="form-control" id="outfiles" placeholder="a.out" name="outfiles">
+			    	</div>
+			    	<div class="form-group">
+					    <label for="addfiles">Add Additional Files:</label>
+<!-- 					    <input type="text" class="form-control" id="addfiles" name="addfiles"> -->
+<!-- 			    	</div> -->
+<!-- 					<div class="form-group"> -->
+					    <div id="addfiles">
+					        <label class="btn btn-default" for="addfiles">
+					            <input id="addfiles" type="file" name="addfiles">
+					            <i class="fa_icon icon-upload-alt margin-correction"></i>
+					        </label>
+					    </div>
+					</div>
+			    	<div class="form-group">
+					    <label for="ccommargs">Command Args:</label>
+					    <input type="text" class="form-control" id="ccommargs" placeholder="args" name="ccommargs">
+			    	</div>
+			    	<h4>This is your command:</h4>
+					{% for input in compileinput %}
+						<p>{{ input.ccommand }} {{input.driver}} -o {{input.outfiles}} {{input.ccommandargs}}</p>
+					{% endfor %}
+			    	<div class="text-right">
+			    		<button type="submit" class="btn btn-default">Compile Code</button>
+			    	</div>
+		  		</div>
+{% endblock %}
+			</form>
+		</div>
+	</div>
+{% endblock %}

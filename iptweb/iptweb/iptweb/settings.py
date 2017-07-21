@@ -49,7 +49,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
 ROOT_URLCONF = 'iptweb.urls'
+
 
 TEMPLATES = [
     {
@@ -119,5 +122,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# Django crispy forms pack
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+# LOGIN_REDIRECT_URL = '/' # means home view

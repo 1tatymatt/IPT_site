@@ -10,17 +10,35 @@
 
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<!-- <link href="/base.css" rel="stylesheet"></link> -->
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-	<div class="container">
-			<div class="jumbotron">
-			<h1><center>Interactive Parallelization Tool</center></h1>      
-			</div>     
+<!-- 	<div class="container"> -->
+<!-- 	<div class="jumbotron">
+		<h1><center>Interactive Parallelization Tool</center></h1>      
+	</div> -->     
+<!-- 	</div> -->
+	<!-- Navbar -->
+
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" >IPT</a>
+	    </div>
+
+	    <ul class="nav navbar-nav navbar-right">
+	      <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+	    </ul>
+	  </div>
+	</nav>
+	<div class="jumbotron">
+		<h1><center>Interactive Parallelization Tool</center></h1>      
 	</div>
 	<!--Tabs-->
-	<div class="container">
-	 	<ul id="activetab" class="nav nav-tabs">
 {% block activetab %}
 <!-- 	    	<li class="active"><a data-toggle="tab" href="compile">Compile</a></li>
 		    <li><a data-toggle="tab" href="run">Run</a></li>

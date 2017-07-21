@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block activetab %}
+<div class="container">
+  <ul class="nav nav-tabs">
+	    	<li><a data-toggle="tab" href="terminal">Terminal</a></li>
 	    	<li><a data-toggle="tab" href="compile">Compile</a></li>
 		    <li><a data-toggle="tab" href="run">Run</a></li>
 		    <li class="active"><a data-toggle="tab" href="history">Job History</a></li>
@@ -10,17 +13,19 @@
 {% block body %}
 	<!-- History Tab -->
 {% block header %}
-{% for job in jobs %}
-	<h1>{{ job.uname }}'s Job History</h1>
-{% endfor %}
+	<h1>Your Job History</h1>
 {% endblock %}
 {% block headersum %}
 	<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 {% endblock %}
+{% if history_error %}
+<div class="error">
+	<p>There was an error: {{ history_error }}</p>
+</div>
+{% endif %}
 		<table class="table table-hover">
 			<tr>
 				<thead>
-	    			<th>Type</th>
 	    			<th>ID</th>
 	    			<th>Name</th>
 	    			<th>Status</th>
@@ -29,17 +34,15 @@
 	<!--     			<th>OutputDirectory</th> -->
 				</thead>
     		</tr>
-    		{% for job in jobs %}
+			{% for job in jobs %}
     		<tr>
-    			<tbody>
-	    			<td>{{ job.type }}</td>
-	    			<td>{{ job.id }}</td>
-	    			<td>{{ job.name }}</td>
-	    			<td>{{ job.status }}</td>	
-	    			<td>{{ job.start }}</td>
-	    			<td>{{ job.end }}</td>
-	<!--     			<td></td>	 -->	
-				</tbody>	    					    		
+<!--     			<td>{{ job.type }}</td> -->
+    			<td>{{ job.id }}</td>
+    			<td>{{ job.name }}</td>
+    			<td>{{ job.status }}}</td>	
+    			<td>{{ job.startTime }}</td>
+    			<td>{{ job.endTime }}</td>
+    			<td></td>			    					    		
     		</tr>
     		{% endfor %}	
 		</table>

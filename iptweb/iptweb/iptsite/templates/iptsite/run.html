@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block activetab %}
+<div class="container">
+  <ul class="nav nav-tabs">
+	    	<li><a data-toggle="tab" href="terminal">Terminal</a></li>
 	    	<li><a data-toggle="tab" href="compile">Compile</a></li>
 		    <li class="active"><a data-toggle="tab" href="run">Run</a></li>
 		    <li><a data-toggle="tab" href="history">Job History</a></li>
@@ -19,18 +22,26 @@
 	<div class="container">
 		<form action="#">
 {% block form-group %}
-	<div class="form-group">
+	<div class="form-group" method="POST" action="/run">{% csrf_token %}
     	<div class="form-group">
 		    <label for="rcommand">Command:</label>
 		    <input type="text" class="form-control" id="rcommand" placeholder="Enter ibrun or ./nameofexecutable" name="rcommand">
-<!-- 			    	</div>
-    	<div class="form-group"> -->
+			{% if run_command_error %}
+			<div class="error">
+				<p>There was an error: {{ run_command_error }}</p>
+			</div>
+			{% endif %}
+
 		    <label for="jobq">Job Queue:</label>
 		    <input type="text" class="form-control" id="jobq" placeholder="Enter the name of the queue. i.e. normal, dev, vis, etc." name="jobq">
-<!-- 			    	</div>
-    	<div class="form-group"> -->
-	      	<label for="sel1">Number of cores:</label>
-	      	<select class="form-control" type="number" id="sel1" name="sel1">
+			{% if job_queue_error %}
+			<div class="error">
+				<p>There was an error: {{ job_queue_error }}</p>
+			</div>
+			{% endif %}
+
+	      	<label for="numcores">Number of cores:</label>
+	      	<select class="form-control" type="number" id="numcores" name="numcores">
 	        	<option value="disabled" disabled>Select One</option>
 	        	<option value="text">1</option>
 	        	<option value="text">2</option>
@@ -49,26 +60,62 @@
 	        	<option value="text">15</option>
 	        	<option value="text">16</option>        	
 	      	</select>
-<!-- 			    	</div>
-    	<div class="form-group"> -->
+			{% if num_cores_error %}
+			<div class="error">
+				<p>There was an error: {{ num_cores_error }}</p>
+			</div>
+			{% endif %}
+
 		    <label for="numnodes">Number of Nodes:</label>
 		    <input type="text" class="form-control" id="numnodes" placeholder="Enter number of nodes. if OpenMP or CUDA: Enter 1, if MPI or Hybrid: You may enter 1+" name="numnodes">
-<!-- 			    	</div>
-    	<div class="form-group"> -->
+			{% if num_nodes_error %}
+			<div class="error">
+				<p>There was an error: {{ num_nodes_error }}</p>
+			</div>
+			{% endif %}
+
 		    <label for="estrun">Estimated Job Runtime:</label>
 		    <input type="time" class="form-control" id="estrun" placeholder="Enter Hours:Minutes:Seconds" name="estrun">
-<!-- 			    	</div>
-    	<div class="form-group"> -->
+			{% if est_run_error %}
+			<div class="error">
+				<p>There was an error: {{ est_run_error }}</p>
+			</div>
+			{% endif %}
+
 		    <label for="allocnum">Allocation Number:</label>
 		    <input type="text" class="form-control" id="allocnum" placeholder="Enter allocation number if estimated job runtime is greater than half hour" name="allocnum">
-<!-- 			    	</div>
-    	<div class="form-group"> -->
+			{% if alloc_num_error %}
+			<div class="error">
+				<p>There was an error: {{ alloc_num_error }}</p>
+			</div>
+			{% endif %}
+
 		    <label for="bin">Binary:</label>
 		    <input type="text" class="form-control" id="bin" placeholder="Enter binary file name" name="bin">
-<!-- 			    	</div>					    						    	
-    	<div class="form-group"> -->
+			{% if binary_error %}
+			<div class="error">
+				<p>There was an error: {{ binary_error }}</p>
+			</div>
+			{% endif %}
+			<div class="form-group">
+			    <label for="run_additional_files">Additional Files:</label>
+<!-- 			    <input type="addfiles" class="form-control" id="addfiles" placeholder="Add additional files or folders" name="addfiles"> -->
+<!-- 			</div> -->
+			<div>
+			    <span id="fileselector">
+			        <label class="btn btn-default" for="upload-file-selector">
+			            <input id="upload-file-selector" type="file">
+			            <i class="fa_icon icon-upload-alt margin-correction"></i>Upload
+			        </label>
+			    </span>
+			</div>
 		    <label for="rcommandargs">Command Args:</label>
 		    <input type="text" class="form-control" id="rcommandargs" placeholder="args" name="rcommandargs">
+			{% if run_command_args_error %}
+			<div class="error">
+				<p>There was an error: {{ run_command_args_error }}</p>
+			</div>
+			{% endif %}
     	</div>
     	<h4>This is your command:</h4>
 		{% for input in runinput %}

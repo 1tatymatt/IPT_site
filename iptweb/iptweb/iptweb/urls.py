@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth import views
+from iptsite.forms import LoginForm
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-	url(r'', include('iptsite.urls')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'', include('iptsite.urls')),
+    #  r'^accounts/login/$', auth_views.login, name='login'
+     url(r'^accounts/login/$', auth_views.LoginView.as_view(template_name='iptsite/login.html')),
+    # url('^', include('django.contrib.auth.urls'), {'template_name': 'login.html', 'authentication_form': LoginForm}),
+    url(r'^logout/$', views.logout, {'next_page': '/login'}),
 ]
-
-
-# urlpatterns = [
-#     url(r'^polls/', include('polls.urls')),
-# ]

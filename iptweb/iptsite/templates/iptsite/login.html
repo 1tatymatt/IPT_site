@@ -54,6 +54,9 @@
 				        Forgot your password? <a href="#" id="recoverPassword" class="link link-grayDarkest link-underline" alt="Reset password">Click here</a>
 				        </div>
 					</div>
+					</fieldset>
+				</form>
+				<form class="form-horizontal" method="POST" action="/create_account" >{% csrf_token %}
 					<!-- Create Account Button -->
 				    <div class="form-group">
 				    	<div class="col-lg-8 col-lg-offset-2">
@@ -63,8 +66,8 @@
 					        </button>
 					        </div>
 						</div>
-					</fieldset>
-				</form>
+					</div>
+				</form>		
 			</div>
 		</div>
 	</div>

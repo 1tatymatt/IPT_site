@@ -43,13 +43,21 @@ def history(request):
 			# 	print(job.id, '  ', job.status, '  ', job.created, '   ', job.owner, '   ', job.name)
 			# print jobs[0]
 			
-			context = {"jobs": jobs, }
+			# for job in jobs:
+			# 	print job.id, job.status, job.name, job.startTime, job.endTime
+			context = {"jobs": jobs}
 			return render(request, 'iptsite/history.html', context, content_type='text/html')
 
 		except Exception as e:
-			# import pdb; pdb.set_trace
-			context = {"history_error": "Error viewing history: {}, {}".format(e, e.response.content)}
-			return render(request, 'iptsite/history.html', context, content_type='text/html')
+			raise e
+		# 	# import pdb; pdb.set_trace
+		# 	response = getattr(e, 'response', None)
+		# 	if response:
+		# 		message = response.content
+		# 	else:
+		# 		message = e.message
+		# 	context = {"history_error": "Error viewing history: {}, {}".format(type(e), message)}
+		# 	return render(request, 'iptsite/history.html', context, content_type='text/html')
 
 	# modal should display immediately after submit is clicked and job is compiling in background
 	# check history tab for updated status on your job
@@ -159,13 +167,9 @@ def login(request):
 
 	if request.method == 'POST':
 
-		# place in code, so that create account only shows when button is clicked
-		# if create_account(request):
-		# 	return render(request, 'iptsite/create_account.html', content_type='text/html')
-		# 	return redirect(reverse("create_account"))
-
 		username = request.POST.get('username')
 		password = request.POST.get('password')
+
 		if not username:
 			context = {"error": "Username cannot be blank"}
 			return render(request, 'iptsite/login.html', context, content_type='text/html')
@@ -285,21 +289,16 @@ def compile(request):
 			context = {"commargs_error": "Args cannot be blank"}
 			return render(request, 'iptsite/compile.html', context, content_type='text/html')
 		
-		app_version = os.environ.get("AGAVE_IPT_BUILD", "0.0.1")
+		app_version = os.environ.get("AGAVE_IPT_BUILD", "0.1.0")
 
 # ORIGINAL
 		job_dict = {
-			"jobName": "ipt-compile-{}", 
-			"appId": "ipt-compile-{}".format(app_version),
-			# where is version number coming from?
-			"executionSystem": "designsafe.community.data-01", #"dev.ipt.build.execute",
-			# . . . 
-			# . . .
+			"jobName": "ipt-build-{}", 
+			"appId": "ipt-build-dev-{}".format(app_version),
+			"executionSystem": "dev.ipt.build.execute",
 			"parameters" : { 
 				"command" : ccommand,
-				# "driver": ,
-				"output" : outfiles,
-				# "supplemental-files": addfiles,   
+				"output" : outfiles,   
 				"args" : commargs,
 				"modules" : "$MODULES_STR",}
 		}
@@ -351,11 +350,21 @@ def terminal(request):
 	if request.method == 'GET':
 		return render(request, 'iptsite/terminal.html', content_type='text/html')
 
+# def check_for_create_account:
+# 	create_account()
+# 	return
+
 def create_account(request):
 	"""
 	This is the view for the Create Account page.
 	"""
-	return render(request, 'iptsite/create_account.html', content_type='text/html')
+	# place in code, so that create account only shows when button is clicked
+	if request.method == 'POST':
+		return render(request, 'iptsite/create_account.html', content_type='text/html')
+		# submit user entered content to database
+
+	elif request.method == 'GET':
+		return render(request, 'iptsite/create_account.html', content_type='text/html')
 
 	# pass tokens here!
 

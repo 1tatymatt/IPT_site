@@ -339,20 +339,21 @@ def compile(request):
 		return render(request, 'iptsite/login.html', context, content_type='text/html')
 	"""
 
+
 def terminal(request):
 	"""
 	This view generates the Terminal page.
 	"""
-	# if tokens for valid session aren't there, redirect to the login page
-	if not check_for_tokens(request):
-		return redirect(reverse("login"))
+	# Add these 2 lines of code after Terminal tab testing is complete to ensure
+	# that no unauthorized user can access this page.
+	# if not check_for_tokens(request):
+	# 	return redirect(reverse("login"))
 	
 	if request.method == 'GET':
-		return render(request, 'iptsite/terminal.html', content_type='text/html')
 
-# def check_for_create_account:
-# 	create_account()
-# 	return
+		# TESTING HERE
+
+		return render(request, 'iptsite/terminal.html', content_type='text/html')
 
 def create_account(request):
 	"""
